@@ -1,0 +1,11 @@
+# Data Engineer Professional notebooks chained in folder order.
+# The declarative pipeline (03_data_transformation_cleansing_and_quality) runs as a pipeline_task.
+resources:
+  jobs:
+    data_engineer_professional:
+      name: data_engineer_professional
+      tasks:
+        - task_key: 03_customer_quality_pipeline
+          # Declarative pipeline defined in resources/pipelines.yml (serverless).
+          pipeline_task:
+            pipeline_id: ${resources.pipelines.customer_quality_pipeline.id}

@@ -1,0 +1,19 @@
+# Lakeflow Declarative Pipeline (formerly DLT) used by exams/data_engineer_professional/03_data_transformation_cleansing_and_quality.
+# Triggered from the data_engineer_professional job with a pipeline_task; can also be run alone:
+#   databricks bundle run customer_quality_pipeline -t dev
+resources:
+  pipelines:
+    customer_quality_pipeline:
+      name: customer_quality_pipeline
+      serverless: true            # Free Edition supports serverless pipelines only
+      catalog: ${var.catalog}     # default catalog for every dataset the pipeline publishes
+      schema: ${var.schema}       # default schema for every dataset the pipeline publishes
+      continuous: false           # triggered: process what is available, then stop
+      development: true
+      channel: CURRENT
+      libraries:
+        - notebook:
+            path: ../src/exams/data_engineer_professional/03_data_transformation_cleansing_and_quality/03_declarative_pipeline.py
+      configuration:
+        # Read in the pipeline source with spark.conf.get("landing_path")
+        landing_path: /Volumes/${var.catalog}/${var.schema}/landing

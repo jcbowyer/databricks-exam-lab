@@ -1,0 +1,125 @@
+# Interview drills: 15 must-know live-coding patterns, one notebook task each, chained 01 -> 15.
+# Run setup_tpch first. No compute blocks, so every task runs on serverless.
+resources:
+  jobs:
+    interview_drills:
+      name: interview_drills
+      tasks:
+        - task_key: 01_read_explicit_schema_write_delta
+          notebook_task:
+            notebook_path: ../src/interview_drills/01_read_explicit_schema_write_delta.py
+            base_parameters:
+              catalog: ${var.catalog}
+              schema: ${var.schema}
+        - task_key: 02_select_filter_withcolumn_cast_alias
+          depends_on:
+            - task_key: 01_read_explicit_schema_write_delta
+          notebook_task:
+            notebook_path: ../src/interview_drills/02_select_filter_withcolumn_cast_alias.py
+            base_parameters:
+              catalog: ${var.catalog}
+              schema: ${var.schema}
+        - task_key: 03_when_otherwise
+          depends_on:
+            - task_key: 02_select_filter_withcolumn_cast_alias
+          notebook_task:
+            notebook_path: ../src/interview_drills/03_when_otherwise.py
+            base_parameters:
+              catalog: ${var.catalog}
+              schema: ${var.schema}
+        - task_key: 04_groupby_agg
+          depends_on:
+            - task_key: 03_when_otherwise
+          notebook_task:
+            notebook_path: ../src/interview_drills/04_groupby_agg.py
+            base_parameters:
+              catalog: ${var.catalog}
+              schema: ${var.schema}
+        - task_key: 05_join_types
+          depends_on:
+            - task_key: 04_groupby_agg
+          notebook_task:
+            notebook_path: ../src/interview_drills/05_join_types.py
+            base_parameters:
+              catalog: ${var.catalog}
+              schema: ${var.schema}
+        - task_key: 06_window_latest_record_per_key
+          depends_on:
+            - task_key: 05_join_types
+          notebook_task:
+            notebook_path: ../src/interview_drills/06_window_latest_record_per_key.py
+            base_parameters:
+              catalog: ${var.catalog}
+              schema: ${var.schema}
+        - task_key: 07_window_top_n_per_group
+          depends_on:
+            - task_key: 06_window_latest_record_per_key
+          notebook_task:
+            notebook_path: ../src/interview_drills/07_window_top_n_per_group.py
+            base_parameters:
+              catalog: ${var.catalog}
+              schema: ${var.schema}
+        - task_key: 08_window_lag_lead_running_total
+          depends_on:
+            - task_key: 07_window_top_n_per_group
+          notebook_task:
+            notebook_path: ../src/interview_drills/08_window_lag_lead_running_total.py
+            base_parameters:
+              catalog: ${var.catalog}
+              schema: ${var.schema}
+        - task_key: 09_explode_split_arrays_structs
+          depends_on:
+            - task_key: 08_window_lag_lead_running_total
+          notebook_task:
+            notebook_path: ../src/interview_drills/09_explode_split_arrays_structs.py
+            base_parameters:
+              catalog: ${var.catalog}
+              schema: ${var.schema}
+        - task_key: 10_null_handling_and_dedup
+          depends_on:
+            - task_key: 09_explode_split_arrays_structs
+          notebook_task:
+            notebook_path: ../src/interview_drills/10_null_handling_and_dedup.py
+            base_parameters:
+              catalog: ${var.catalog}
+              schema: ${var.schema}
+        - task_key: 11_date_time_functions
+          depends_on:
+            - task_key: 10_null_handling_and_dedup
+          notebook_task:
+            notebook_path: ../src/interview_drills/11_date_time_functions.py
+            base_parameters:
+              catalog: ${var.catalog}
+              schema: ${var.schema}
+        - task_key: 12_merge_into_upsert
+          depends_on:
+            - task_key: 11_date_time_functions
+          notebook_task:
+            notebook_path: ../src/interview_drills/12_merge_into_upsert.py
+            base_parameters:
+              catalog: ${var.catalog}
+              schema: ${var.schema}
+        - task_key: 13_repartition_vs_coalesce
+          depends_on:
+            - task_key: 12_merge_into_upsert
+          notebook_task:
+            notebook_path: ../src/interview_drills/13_repartition_vs_coalesce.py
+            base_parameters:
+              catalog: ${var.catalog}
+              schema: ${var.schema}
+        - task_key: 14_broadcast_join_and_aqe
+          depends_on:
+            - task_key: 13_repartition_vs_coalesce
+          notebook_task:
+            notebook_path: ../src/interview_drills/14_broadcast_join_and_aqe.py
+            base_parameters:
+              catalog: ${var.catalog}
+              schema: ${var.schema}
+        - task_key: 15_structured_streaming_available_now
+          depends_on:
+            - task_key: 14_broadcast_join_and_aqe
+          notebook_task:
+            notebook_path: ../src/interview_drills/15_structured_streaming_available_now.py
+            base_parameters:
+              catalog: ${var.catalog}
+              schema: ${var.schema}

@@ -1,0 +1,14 @@
+# Copies a manageable subset of samples.tpch into ${var.catalog}.${var.schema}.
+# Run this first: databricks bundle run setup_tpch -t dev
+resources:
+  jobs:
+    setup_tpch:
+      name: setup_tpch
+      tasks:
+        # No compute block => the task runs on serverless compute.
+        - task_key: copy_tpch
+          notebook_task:
+            notebook_path: ../src/setup/copy_tpch.py
+            base_parameters:
+              catalog: ${var.catalog}
+              schema: ${var.schema}
